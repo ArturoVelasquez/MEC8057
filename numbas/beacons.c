@@ -2,13 +2,15 @@
 localitation. It asumes that all the circles just intersec at one point.
 */
 #include <stdio.h>
-#include <math.h>
+#include <string.h>
+#include <stdlib.h>
 
 float x,y;
 
 float ** get_circles();
 void direct_calculation(float circle_1[3],float circle_2[3],float circle_3[3]);
 void indirect_calculation(float circle_1[3],float circle_2[3],float circle_3[3]);
+void python_print(float circle_1[3],float circle_2[3],float circle_3[3], float x, float y);
 
 int main(){
 
@@ -29,7 +31,8 @@ int main(){
   else{
     indirect_calculation(circle_1,circle_2,circle_3);
   }
-  printf("The point of intersection is ( %f , %f )\n", x,y );
+  printf("The point of intersection is ( %f , %f )\n", x, y );
+  python_print(circle_1,circle_2,circle_3,x,y);
   return 0;
 }
 
@@ -84,4 +87,38 @@ general calculation if is solved for y first.
 void direct_calculation(float circle_1[3],float circle_2[3],float circle_3[3]){
   y = ((circle_1[0]*circle_1[0])+(circle_1[1]*circle_1[1])+(circle_3[2]*circle_3[2])-(circle_3[0]*circle_3[0])-(circle_3[1]*circle_3[1])-(circle_1[2]*circle_1[2]))/(2*(circle_1[1]-circle_3[1]));
   x = ((circle_3[0]*circle_3[0])+(circle_3[1]*circle_3[1])+(circle_2[2]*circle_2[2])-(circle_2[0]*circle_2[0])-(circle_2[1]*circle_2[1])-(circle_3[2]*circle_3[2])-y*2*(circle_3[1]-circle_2[1]))/(2*(circle_3[0]-circle_2[0]));
+}
+
+void python_print(float circle_1[3],float circle_2[3],float circle_3[3], float x, float y){
+  char run_this[200]="python3 beacons.py ";
+  char circle_str_1[60],circle_str_2[60],circle_str_3[60],x_position[15],y_position[15];
+
+  float *c1=&circle_1[0];
+  float *c2=&circle_2[0];
+  float *c3=&circle_3[0];
+
+  sprintf(circle_str_1," %g %g %g", *c1,*(c1+1),*(c1+2));
+  sprintf(circle_str_2," %g %g %g", *c2,*(c2+1),*(c2+2));
+  sprintf(circle_str_3," %g %g %g", *c3,*(c3+1),*(c3+2));
+
+  sprintf(x_position," %g",x);
+  sprintf(y_position," %g",y);
+
+  // printf("The three circles you enteres are: \n");
+  // puts(circle_str_1);
+  // puts(circle_str_2);
+  // puts(circle_str_3);
+  //
+  // printf("This intersect at X position: \n");
+  // puts(x_position);
+  // printf("And at Y position: \n" );
+  // puts(y_position);
+
+  strcat(run_this, circle_str_1);
+  strcat(run_this, circle_str_2);
+  strcat(run_this, circle_str_3);
+  strcat(run_this, x_position);
+  strcat(run_this, y_position);
+  printf("Generating graphs on Python. \n" );
+  system(run_this);
 }
