@@ -1,0 +1,380 @@
+#VRML_SIM R2022a utf8
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.18025393051028812 0.10553124593444214 0.977942573297183 2.10163359407478
+  position 7.7343862320040255 -12.834336333328448 7.299056389716596
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+  wallHeight 0.2
+}
+DEF box_1 Solid {
+  translation -2.29389 0.134883 0.16
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_1_geometry Box {
+        size 0.5 0.25 0.3
+      }
+    }
+  ]
+  boundingObject USE box_1_geometry
+  physics DEF box_physics Physics {
+    density -1
+    mass 100
+  }
+}
+DEF box_2 Solid {
+  translation 2.90583 2.67849 0.32
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.66 0 0.26
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_2_geometry Box {
+        size 1.48 0.52 0.61
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject USE box_2_geometry
+  physics USE box_physics
+}
+DEF box_3 Solid {
+  translation -1.85999 3.33503 0.3
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.132 0 0
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_3 Box {
+        size 1.21 1.26 0.41
+      }
+    }
+  ]
+  name "solid(2)"
+  boundingObject USE box_3
+  physics USE box_physics
+}
+DEF box_4 Solid {
+  translation 0.224467 -2.92561 0.4
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.4 0 0.4
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_4 Box {
+        size 1.48 0.52 0.61
+      }
+    }
+  ]
+  name "solid(3)"
+  boundingObject USE box_4
+  physics USE box_physics
+}
+DEF box_5 Solid {
+  translation 2.91981 -0.943051 0.5
+  rotation 0 1 0 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 0.81
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_5_geometry Box {
+        size 1.72 1.72 0.78
+      }
+    }
+  ]
+  name "solid(4)"
+  boundingObject USE box_5_geometry
+  physics USE box_physics
+}
+DEF box_6 Solid {
+  translation -2.48635 -2.4295 0.55
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.66 0 0.22
+        roughness 1
+        metalness 0
+      }
+      geometry DEF box_6 Box {
+        size 0.65 0.54 1
+      }
+    }
+  ]
+  name "solid(5)"
+  boundingObject USE box_6
+  physics USE box_physics
+}
+DEF cube Solid {
+  translation 2.18882 -4.30198 0.1
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+        roughness 1
+        metalness 0
+      }
+      geometry DEF cube_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "solid(6)"
+  boundingObject USE cube_geometry
+  physics Physics {
+  }
+}
+DEF final_robot Robot {
+  translation 0 0 0.125
+  children [
+    GPS {
+      name "u__gps__s"
+    }
+    TouchSensor {
+      translation 0 0 0.091
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry DEF bumper_cilinder Cylinder {
+            height 0.07
+            radius 0.05
+          }
+        }
+      ]
+      name "u_force_s"
+      boundingObject USE bumper_cilinder
+      physics Physics {
+      }
+    }
+    Camera {
+      translation 0.14 0 0.025
+      rotation 0 1 0 0.15
+      children [
+        Transform {
+          translation -0.015 0 0
+          rotation 0.5773502691896258 0.5773502691896258 0.5773502691896258 2.093
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+              }
+              geometry Cylinder {
+                height 0.03
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      name "u_camer_s"
+      fieldOfView 1
+      width 400
+      height 300
+      antiAliasing TRUE
+    }
+    DEF LEFT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.12 0
+      }
+      device [
+        PositionSensor {
+          name "l_encod_s"
+        }
+        RotationalMotor {
+          name "l_motor_a"
+        }
+      ]
+      endPoint Solid {
+        translation 1.8868848134347485e-13 0.12 4.896069999999988e-05
+        rotation 1 4.347185510867564e-12 -4.349069618357601e-12 1.5708000000315006
+        children [
+          DEF wheel Shape {
+            appearance PBRAppearance {
+              baseColor 0.55 0.55 0.55
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.125
+              subdivision 100
+            }
+          }
+        ]
+        boundingObject USE wheel
+        physics Physics {
+        }
+      }
+    }
+    DEF RIGHT_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 -0.12 0
+      }
+      device [
+        PositionSensor {
+          name "r_encod_s"
+        }
+        RotationalMotor {
+          name "r_motor_a"
+        }
+      ]
+      endPoint Solid {
+        translation 1.8869048711749395e-13 -0.12 4.8961200000000015e-05
+        rotation 1 4.349226627315104e-12 -4.348677095963844e-12 1.5708000000315006
+        children [
+          USE wheel
+        ]
+        name "solid(1)"
+        boundingObject USE wheel
+        physics Physics {
+        }
+      }
+    }
+    DEF CASTOR_WHEEL HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor -0.1 0 -0.1
+      }
+      endPoint Solid {
+        translation -0.1 0 -0.1
+        rotation 1 4.3339967584372984e-12 -4.3336042360435406e-12 1.5708000000315014
+        children [
+          DEF castor Shape {
+            appearance PBRAppearance {
+              baseColor 0.55 0.55 0.55
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.025
+              subdivision 2
+            }
+          }
+        ]
+        name "solid(2)"
+        boundingObject USE castor
+        physics Physics {
+          damping Damping {
+            linear 0
+            angular 0
+          }
+        }
+      }
+    }
+    DEF CASTOR_WHEEL_FRONT HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0.1 0 -0.1
+      }
+      endPoint Solid {
+        translation 0.1 0 -0.1
+        rotation 1 4.332858443495403e-12 -4.33317246141041e-12 1.5708000000315008
+        children [
+          USE castor
+        ]
+        name "solid(3)"
+        boundingObject USE castor
+        physics Physics {
+          damping Damping {
+            linear 0
+            angular 0
+          }
+        }
+      }
+    }
+    DEF ROBOT_BODY Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.25 0.23 0.224
+      }
+    }
+    DEF RIGHT_SENSOR DistanceSensor {
+      translation 0.125 -0.05 0.045
+      rotation 0 0 1 0.03
+      children [
+        Shape {
+          appearance DEF sensors_color PBRAppearance {
+            baseColor 1 0 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.05 0.05 0.05
+          }
+        }
+      ]
+      name "r_dista_s"
+      lookupTable [
+        0 0 0
+        1 1000 0
+      ]
+      aperture 2
+    }
+    DEF LEFT_SENSOR DistanceSensor {
+      translation 0.125 0.05 0.045
+      rotation 0 0 1 -0.03
+      children [
+        Shape {
+          appearance DEF sensors_color PBRAppearance {
+            baseColor 1 0 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.05 0.05 0.05
+          }
+        }
+      ]
+      name "l_dista_s"
+      lookupTable [
+        0 0 0
+        1 1000 0
+      ]
+      aperture 2
+    }
+  ]
+  boundingObject USE ROBOT_BODY
+  physics Physics {
+  }
+  controller "final_controlle_preview"
+}
+DEF center_point Shape {
+  appearance PBRAppearance {
+    baseColor 1 0 1
+    roughness 1
+    metalness 0
+  }
+  geometry Cylinder {
+    height 0.001
+    radius 0.2
+  }
+}
